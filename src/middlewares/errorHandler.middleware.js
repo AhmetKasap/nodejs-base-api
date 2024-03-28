@@ -2,7 +2,6 @@ const APIError = require('../utils/Error')
 
 const errorHandler = (err,req,res,next) => {
     if(err instanceof APIError) {
-        next()
         return res.status(err.statusCode || 400).json({      
             success : false, 
             message : err.message                            

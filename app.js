@@ -8,6 +8,10 @@ require('dotenv').config()
 const mongoDbConnection = require('./src/config/mongodb.connection')
 mongoDbConnection()
 
+//! rate limit
+const limit = require('./src/middlewares/lib/rateLimit')
+app.use('/api/v1',limit)
+
 
 //! body-parser
 const bodyParser = require('body-parser')    
