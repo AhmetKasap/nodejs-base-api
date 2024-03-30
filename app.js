@@ -3,23 +3,27 @@ const express = require('express')
 const app = express()
 require('dotenv').config()
 
-
-//! database connection
+//! Database Connection
 const mongoDbConnection = require('./src/config/mongodb.connection')
 mongoDbConnection()
 
-//! rate limit
+//! Rate Limit
 const limit = require('./src/middlewares/lib/rateLimit')
 app.use('/api/v1',limit)
 
+//! Cors Options
+const cors = require('cors')
+const corsOptions = require('./src/middlewares/lib/cors')
+app.use(cors(corsOptions))
 
-//! body-parser
+
+//! Body-parser
 const bodyParser = require('body-parser')    
 app.use(bodyParser.urlencoded({extended:false}))  
 app.use(bodyParser.json())
 
 
-//! routes and errorHandler
+//! Routes and ErrorHandler
 const routes = require('./src/routes/index.route')
 app.use('/api/v1',routes)
 
