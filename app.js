@@ -7,6 +7,10 @@ require('dotenv').config()
 const mongoDbConnection = require('./src/config/mongodb.connection')
 mongoDbConnection()
 
+//! Nosql Injection Blocking
+const mongoSanitize = require('express-mongo-sanitize')
+app.use(mongoSanitize())
+
 //! Rate Limit
 const limit = require('./src/middlewares/lib/rateLimit')
 //app.use('/api/v1',limit)
