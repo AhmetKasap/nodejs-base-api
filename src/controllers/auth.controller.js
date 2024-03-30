@@ -2,7 +2,7 @@ const userModel = require('../models/user.model')
 const APIError = require('../utils/Error')
 const Response = require('../utils/Response')
 
-const login = async(req,res,next) => {
+const loginController = async(req,res,next) => {
     const user = await userModel.findOne({email : req.body.email})
     if(!user) throw new APIError('User information is incorrect, please try again', 404)
 
@@ -10,7 +10,7 @@ const login = async(req,res,next) => {
     else throw new APIError('User information is incorrect, please try again', 404)
 }
 
-const register = async(req,res) => {
+const registerController = async(req,res) => {
     const auth = await userModel.findOne({email:req.body.email})
     if(auth) throw new APIError('This email is already in use, please try different email', 401)
 
@@ -20,7 +20,9 @@ const register = async(req,res) => {
         email : req.body.email,
         password : req.body.password
     })
-    userDb.save()
+    const response = await userDb.save()
+    if(response) return new Response(null, 'Registration Successful').created(res)
+    else throw new APIError('An error occurred during registration', 500)
 }
 
 const test = async(req,res) => {
@@ -29,5 +31,5 @@ const test = async(req,res) => {
 
 
 module.exports = {
-    login,register,test
+    loginController,registerController,test
 }

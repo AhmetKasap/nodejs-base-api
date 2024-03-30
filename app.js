@@ -9,7 +9,7 @@ mongoDbConnection()
 
 //! Rate Limit
 const limit = require('./src/middlewares/lib/rateLimit')
-app.use('/api/v1',limit)
+//app.use('/api/v1',limit)
 
 //! Cors Options
 const cors = require('cors')
@@ -32,7 +32,7 @@ app.use((req,res, next) => {
     next()
 })
 
-const errorHandler = require('./src/middlewares/errorHandler.middleware')
+const errorHandler = require('./src/middlewares/errorHandler')
 app.use(errorHandler)
 
 
