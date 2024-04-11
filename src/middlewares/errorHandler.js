@@ -1,7 +1,7 @@
 const APIError = require('../utils/Error')
 
 const errorHandler = (err,req,res,next) => {
-    console.log(err) // all error content
+    //console.log(err) // all error content
 
     if(err instanceof APIError) {
         return res.status(err.statusCode || 400).json({      
@@ -18,9 +18,7 @@ const errorHandler = (err,req,res,next) => {
         })  
     }
 
-    
-    
-
+  
 }
 
 module.exports = errorHandler

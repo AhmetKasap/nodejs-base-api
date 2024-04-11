@@ -24,11 +24,11 @@ app.use(cors(corsOptions))
 //! Body-parser
 const bodyParser = require('body-parser')    
 app.use(bodyParser.urlencoded({extended:false}))  
-app.use(bodyParser.json())
+app.use(bodyParser.json()) 
 
 
 //! Routes and ErrorHandler
-const routes = require('./src/routes/index.route')
+const routes = require('./src/routes/index.routes')
 app.use('/api/v1',routes)
 
 app.use((req,res, next) => {
