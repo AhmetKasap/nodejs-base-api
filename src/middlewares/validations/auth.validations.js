@@ -11,7 +11,9 @@ const registerValidation = async(req,res,next) => {
                 .required().trim().min(3).messages({
                     "string.email" : "\"email\" must be a valid email. example : test@gmail.com"
             }),
-            password : joi.string().min(3).max(30).required().trim()
+            password : joi.string().min(3).max(30).required().trim(),
+            verifiedAccount : joi.boolean(),
+            verificationCode : joi.string()
         })
     
         const test = await schema.validateAsync(req.body)
