@@ -60,6 +60,14 @@ class Response {
         })
     }
 
+    conflict(res) {
+        return res.status(409).json({
+            success : false,
+            data : this.data,
+            message : this.message ?? 'conflict'
+        })
+    }
+
     internalServerError(res){
         return res.status(500).json({
             success : false,

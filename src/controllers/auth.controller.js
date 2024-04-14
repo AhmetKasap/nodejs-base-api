@@ -4,7 +4,7 @@ const Response = require('../utils/Response')
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
 const mail = require('../helpers/sendMail')
-const deleteUnverifiedAccount = require('../helpers/deleteUnverifiedAccount')
+const authMiddlewares = require('../middlewares/auth.middlewares')
 
 
 const registerController = async(req,res) => {
@@ -34,25 +34,28 @@ const registerController = async(req,res) => {
 }
 
 
-const resendVerificationEmail = async(req,res) => {
+const resendVerificationEmailController = async(req,res) => {
     const auth = await userModel.findOne({email:req.body.email})
-    if(!auth) throw new APIError('User information is incorrect, please try again', 404)
+    if(!auth) throw new APIError('User information is incorrect, please try again', 400)
 
-    const verificationCode = crypto.randomBytes(3).toString('hex') //*created random code
-    let mailOption = new mail.MailOption(process.env.EMAIL_ADRESS, req.body.email, "Confirm Email", `Please enter this confirmation code to start using 'myAPI'. ${verificationCode}`)
-    await mail.sendMail(mailOption)
+    if(auth.verificationAccount.verifiedAccount === false) {
+        const verificationCode = crypto.randomBytes(3).toString('hex') //*created random code
+        let mailOption = new mail.MailOption(process.env.EMAIL_ADRESS, req.body.email, "Confirm Email", `Please enter this confirmation code to start using 'myAPI'. ${verificationCode}`)
+        await mail.sendMail(mailOption)
 
-    const result = await userModel.updateOne({_id : auth._id}, {verificationAccount : {verificationCode : verificationCode, verifiedAccount : false}})
-    if(result) return new Response(null, 'Please check your email inbox again.').ok(res)
-
+        const result = await userModel.updateOne({_id : auth._id}, {verificationAccount : {verificationCode : verificationCode, verifiedAccount : false}})
+        if(result) return new Response(null, 'Please check your email inbox again.').ok(res)
+    }
+    else return new Response(null, 'Already registration completed successfully').conflict(res)
+ 
 }
 
 
 const completeRegistrationController = async(req,res) => {
     const user = await userModel.findOne({email : req.body.email})
-    if(!user) throw new APIError('User information is incorrect, please try again',401)
+    if(!user) throw new APIError('User information is incorrect, please try again',400)
 
-    if(user.verificationAccount.verifiedAccount === true) return new Response(null, 'Already registration completed successfully').badRequest(res)
+    if(user.verificationAccount.verifiedAccount === true) return new Response(null, 'Already registration completed successfully').ok(res)
 
     if(user.verificationAccount.verificationCode === req.body.verificationCode){
         const result = await userModel.updateOne({_id : user._id}, {verificationAccount : {verifiedAccount:true}})
@@ -69,10 +72,14 @@ const completeRegistrationController = async(req,res) => {
 
 const loginController = async(req,res,next) => {
     const user = await userModel.findOne({email : req.body.email})
-    if(!user) throw new APIError('User information is incorrect, please try again', 404)
+    if(!user) throw new APIError('User information is incorrect, please try again', 400)
 
-    if( (user.verificationAccount.verifiedAccount===true) && await bcrypt.compare(req.body.password, user.password)) return new Response(user, "login successfull").ok(res)
-    else throw new APIError('User information is incorrect, please try again', 404)
+    if( (user.verificationAccount.verifiedAccount===true) && await bcrypt.compare(req.body.password, user.password)) {
+        authMiddlewares.createToken(user,res)
+        //return new Response(user, "login successfull").ok(res)
+
+    }
+    else throw new APIError('User information is incorrect, please try again', 400)
     /*
     else {
         !Send confirmation email again for unverified accounts
@@ -82,16 +89,16 @@ const loginController = async(req,res,next) => {
 
         return new Response(null, 'To complete the registration process, please check your email inbox.').created(res)
     }
-    
     */
 }
 
-const test = async(req,res) => {
-    deleteUnverifiedAccount()
+const tokenControlTestController = async(req,res) => {
+    const authUser = req.authUser
+    return new Response(authUser, 'user information').ok(res)
 }
 
 
 
 module.exports = {
-    loginController,registerController,completeRegistrationController,resendVerificationEmail,test
+    loginController,registerController,completeRegistrationController,resendVerificationEmailController,tokenControlTestController
 }

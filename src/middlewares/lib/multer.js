@@ -40,7 +40,7 @@ const storage = multer.diskStorage({
         }
         else{
             try {
-                throw new APIError('This image format is not supported.',404)   
+                throw new APIError('This image format is not supported.',400)   
             } catch (error) {
                 cb(error)
             }
