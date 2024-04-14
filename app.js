@@ -27,6 +27,9 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json()) 
 
 
+//! node-cron
+const cron = require('./src/helpers/cron')
+cron()
 
 //! Routes and ErrorHandler
 const routes = require('./src/routes/index.routes')
