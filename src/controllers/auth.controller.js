@@ -4,6 +4,7 @@ const Response = require('../utils/Response')
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
 const mail = require('../helpers/sendMail')
+const deleteUnverifiedAccount = require('../helpers/deleteUnverifiedAccount')
 
 
 const registerController = async(req,res) => {
@@ -32,6 +33,7 @@ const registerController = async(req,res) => {
     else throw new APIError('An error occurred during registration', 500)
 }
 
+
 const resendVerificationEmail = async(req,res) => {
     const auth = await userModel.findOne({email:req.body.email})
     if(!auth) throw new APIError('User information is incorrect, please try again', 404)
@@ -44,6 +46,7 @@ const resendVerificationEmail = async(req,res) => {
     if(result) return new Response(null, 'Please check your email inbox again.').ok(res)
 
 }
+
 
 const completeRegistrationController = async(req,res) => {
     const user = await userModel.findOne({email : req.body.email})
@@ -70,24 +73,25 @@ const loginController = async(req,res,next) => {
 
     if( (user.verificationAccount.verifiedAccount===true) && await bcrypt.compare(req.body.password, user.password)) return new Response(user, "login successfull").ok(res)
     else throw new APIError('User information is incorrect, please try again', 404)
+    /*
+    else {
+        !Send confirmation email again for unverified accounts
+        const verificationCode = crypto.randomBytes(3).toString('hex')
+        let mailOption = new mail.MailOption(process.env.EMAIL_ADRESS, req.body.email, "Confirm Email", `Please enter this confirmation code to start using 'myAPI'. ${verificationCode}`)
+        await mail.sendMail(mailOption)
+
+        return new Response(null, 'To complete the registration process, please check your email inbox.').created(res)
+    }
+    
+    */
+}
+
+const test = async(req,res) => {
+    deleteUnverifiedAccount()
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 module.exports = {
-    loginController,registerController,completeRegistrationController,resendVerificationEmail
+    loginController,registerController,completeRegistrationController,resendVerificationEmail,test
 }

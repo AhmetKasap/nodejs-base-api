@@ -27,6 +27,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json()) 
 
 
+
 //! Routes and ErrorHandler
 const routes = require('./src/routes/index.routes')
 app.use('/api/v1',routes)

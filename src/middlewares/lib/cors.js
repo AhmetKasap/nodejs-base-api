@@ -1,4 +1,4 @@
-const corsWhiteList = require('../../helpers/corsList')
+const corsWhiteList = ["http://localhost:3000", "http://localhost:3001"] 
 
 const cors = (req,callback) => {
     let corsOptions 
