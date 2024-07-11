@@ -1,0 +1,343 @@
+{
+	"info": {
+		"_postman_id": "c67778e0-0e18-4117-87ac-c0783be4e2e8",
+		"name": "Express.js Base Rest API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26808226"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Forgot Password",
+					"item": [
+						{
+							"name": "Forgot-Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"ahmetkaasap@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/auth/forgot-password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"forgot-password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Forgot-Password-Check",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"ahmetkaasap@gmail.com\",\r\n    \"code\" : \"1ab013\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/auth/forgot-password-check",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"forgot-password-check"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset-Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"temporaryToken\" : \"Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjY5MDQyYWM4MGY0OGViMjE2YjZiOTAwIiwiZW1haWwiOiJhaG1ldGthYXNhcEBnbWFpbC5jb20ifSwiaWF0IjoxNzIwNzMwNTc1LCJleHAiOjE3MjA3MzA3NTV9.NYRLq1A-rPdnQRY6UyiKzQEJnVQYWSlhh5nMK1d0TYzBfBAGGVdBVrtW2uvkTiZzbQ0KXuzDOESSfXn9xNYMWg\",\r\n    \"password\" : \"deneme\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/auth/reset-password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"reset-password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"ahmetkaasap@gmail.com\",\r\n    \"password\" : \"deneme\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"ahmet\",\r\n    \"lastname\" : \"kasap\",\r\n    \"email\" : \"ahmetkaasap@gmail.com\",\r\n    \"password\" : \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complete Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"ahmetkaasap@gmail.com\",\r\n    \"verificationCode\" : \"eb058e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/auth/complete-registration",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"complete-registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend Verification Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"ahmetkaasap@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/auth/resend-verification-email",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"resend-verification-email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Token Control Test",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjYxYzNlYmI2YjgwMDUxZGU1ZmM3M2Y2IiwiZW1haWwiOiJhaG1ldGthYXNhcEBnbWFpbC5jb20ifSwiaWF0IjoxNzEzMTMzMTQ0LCJleHAiOjE3MTM3Mzc5NDR9.kWAbjREvpKHZxa9GPTVQMAjqKQzP7tgGC89UV3fxkJe5pxlMhC_Pya5uNKMFjHr91C0PCZdSi7CFIgKpvOlR4g",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/v1/auth/token-control-test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"token-control-test"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Images",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"src": [
+										"/C:/Users/ahmet/OneDrive/Masaüstü/Dosyalar/img/logo.png",
+										"/C:/Users/ahmet/OneDrive/Masaüstü/Dosyalar/img/shoe5.jpg",
+										"/C:/Users/ahmet/OneDrive/Masaüstü/Dosyalar/img/slider1.jpg",
+										"/C:/Users/ahmet/OneDrive/Masaüstü/Dosyalar/img/slider2.jpg",
+										"/C:/Users/ahmet/OneDrive/Masaüstü/Dosyalar/img/tshirt1.jpg"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/users/images",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"images"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Avatar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": [
+										"/C:/Users/ahmet/OneDrive/Masaüstü/Dosyalar/img/slider2.jpg",
+										"/C:/Users/ahmet/OneDrive/Masaüstü/Dosyalar/img/slider1.jpg"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/users/avatar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"avatar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
