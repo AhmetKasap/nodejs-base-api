@@ -6,7 +6,10 @@ const {
     loginController, 
     resendVerificationEmailController, 
     completeRegistrationController,
-    tokenControlTestController
+    tokenControlTestController,
+    forgotPasswordController,
+    forgotPasswordCheckCodeController,
+    resetPasswordController
 } = require('../controllers/auth.controller')
 
 const {registerValidation,loginValidation} = require('../middlewares/validations/auth.validations')
@@ -18,6 +21,10 @@ router.post('/login', loginValidation, loginController)
 router.post('/register', registerValidation, registerController)
 router.post('/complete-registration', completeRegistrationController)
 router.post('/resend-verification-email', resendVerificationEmailController)
+
+router.post('/forgot-password', forgotPasswordController)
+router.post('/forgot-password-check', forgotPasswordCheckCodeController)
+router.post('/reset-password', resetPasswordController)
 
 router.get('/token-control-test', authMiddlewares.checkToken, tokenControlTestController)
 

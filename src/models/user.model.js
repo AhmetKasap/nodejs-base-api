@@ -8,6 +8,10 @@ const userSchema = new mongoose.Schema({
     verificationAccount : {
         verifiedAccount : {type : Boolean},
         verificationCode : {type : String}
+    },
+    reset : {
+        code : {type : String, default : null},
+        time : {type : Date, default : null}
     }
     
 })
